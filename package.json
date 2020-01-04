@@ -18,5 +18,13 @@
   "license": "MIT",
   "keywords": [
     "sudoku"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radcliffe/sudoku-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Radcliffe/sudoku-generator/issues"
+  },
+  "homepage": "https://github.com/Radcliffe/sudoku-generator#readme"
 }
