@@ -8,7 +8,6 @@
     "sudoku": "^0.0.3"
   },
   "devDependencies": {
-    "install": "^0.13.0",
     "mysql": "^2.17.1"
   },
   "scripts": {
