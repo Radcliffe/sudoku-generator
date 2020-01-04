@@ -51,8 +51,6 @@ to enlarge the database.
 of batches is greater than 10,000. The number of batches is equal to the number of puzzles divided by the batch
 size, rounded up to the nearest integer. If you don't like this, please submit a pull request to fix it.
 
-## Built with
-
 ## Contributing
 
 Contributions are welcome. Please read the Code of Conduct before contributing.

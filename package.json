@@ -1,5 +1,5 @@
 {
-  "name": "sudoku-generator",
+  "name": "@radcliffe/sudoku-generator",
   "version": "1.0.0",
   "description": "Generates a database of graded Sudoku puzzles with solutions.",
   "main": "index.js",
