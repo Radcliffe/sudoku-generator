@@ -3,6 +3,7 @@ secrets.js
 
 # Microsoft Visual Studio project files
 Node-Sudoku/
+.vs/
 
 #######################################################################################################################
 ## Ignore Visual Studio temporary files, build results, and
