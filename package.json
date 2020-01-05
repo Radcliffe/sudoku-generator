@@ -7,9 +7,6 @@
     "mysql": "github:mysqljs/mysql",
     "sudoku": "^0.0.3"
   },
-  "devDependencies": {
-    "mysql": "^2.17.1"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
