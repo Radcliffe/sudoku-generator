@@ -14,7 +14,7 @@ puzzle having a unique solution, but these are hard to generate.
 
 It is not possible with these scripts to specify the difficulty level or the number of clues when
 generating a Sudoku puzzle. The scripts generate Sudoku puzzles completely at random, and then estimate
-the difficulty afterwards.
+the difficulty afterward.
 
 ## Getting started
 
@@ -46,10 +46,6 @@ where [number] is the number of puzzles to generate, and [batchSize] is the numb
 in each commit. The default values are 1000000 and 1000. With these values, the script runs for about 12 hours
 on my computer. The script can be safely interrupted by pressing Control-C, and the script can be run repeatedly
 to enlarge the database.
-
-**Note:** The script uses recursion to process the batches, so you may experience a stack overflow if the number
-of batches is greater than 10,000. The number of batches is equal to the number of puzzles divided by the batch
-size, rounded up to the nearest integer. If you don't like this, please submit a pull request to fix it.
 
 ## Contributing
 

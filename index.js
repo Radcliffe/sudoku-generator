@@ -1,7 +1,7 @@
-var sudoku = require('sudoku');
-var mysql = require('mysql');
-var secrets = require('./secrets');
-var connection = mysql.createConnection(secrets.db);
+const sudoku = require('sudoku');
+const mysql = require('mysql');
+const secrets = require('./secrets');
+const connection = mysql.createConnection(secrets.db);
 
 
 function stringify(puzzle) {
@@ -32,7 +32,7 @@ function createPuzzle() {
 function savePuzzle(p) {
     connection.query('INSERT INTO sudoku (puzzle, solution, clues, difficulty) VALUES (?, ?, ?, ?)',
         [p.puzzle, p.solution, p.clues, p.difficulty],
-        function (error, results, fields) {
+        function (error) {
             if (error) throw error;
         }
     );
@@ -40,31 +40,46 @@ function savePuzzle(p) {
 
 function generatePuzzles(n, batchSize = 1000) {
     batchSize = Math.min(batchSize, n);
-    console.log(`Puzzles remaining: ${n}`)
-    connection.beginTransaction(function (err) {
-        for (let i = 0; i < batchSize; i++) {
-            let p = createPuzzle();
-            savePuzzle(p);
-        }
-        connection.commit(function (err) {
-            if (err) {
-                connection.rollback(function () {
-                    throw err;
+    console.log(`Puzzles remaining: ${n}`);
+
+    function processBatch(remaining) {
+        return new Promise((resolve, reject) => {
+            connection.beginTransaction(function (err) {
+                if (err) return reject(err);
+
+                for (let i = 0; i < Math.min(batchSize, remaining); i++) {
+                    let p = createPuzzle();
+                    savePuzzle(p);
+                }
+
+                connection.commit(function (err) {
+                    if (err) {
+                        return connection.rollback(function () {
+                            reject(err);
+                        });
+                    }
+                    resolve();
                 });
-            }
-            if (n > batchSize) {
-                generatePuzzles(n - batchSize, batchSize);
-            } else {
-                connection.end();
-            }
+            });
         });
+    }
+
+    async function processAll() {
+        let remaining = n;
+        while (remaining > 0) {
+            await processBatch(remaining);
+            remaining -= batchSize;
+            console.log(`Puzzles remaining: ${remaining}`);
+        }
+        connection.end();
+    }
+
+    processAll().catch(err => {
+        console.error('Error generating puzzles:', err);
+        connection.end();
     });
 }
 
 module.exports = {
-    stringify: stringify,
-    countClues: countClues,
-    createPuzzle: createPuzzle,
-    savePuzzle: savePuzzle,
     generatePuzzles: generatePuzzles,
 };

@@ -1,10 +1,10 @@
-var mysql = require('mysql');
-var secrets = require('./secrets');
-var connection = mysql.createConnection(secrets.db);
+const mysql = require('mysql');
+const secrets = require('./secrets');
+const connection = mysql.createConnection(secrets.db);
 
-var sql_drop_table = `DROP TABLE IF EXISTS sudoku`;
+const sql_drop_table = `DROP TABLE IF EXISTS sudoku`;
 
-var sql_create_table = `CREATE TABLE sudoku (
+const sql_create_table = `CREATE TABLE sudoku (
     id int(11) NOT NULL AUTO_INCREMENT,
     puzzle char(81) NOT NULL,
     solution char(81) NOT NULL,
@@ -15,14 +15,14 @@ var sql_create_table = `CREATE TABLE sudoku (
     KEY diff_idx(difficulty)
 )`;
 
-connection.beginTransaction(function (err) {
+connection.beginTransaction(function () {
     connection.query(sql_drop_table,
-        function (error, results, fields) {
+        function (error) {
             if (error) throw error;
         }
     );
     connection.query(sql_create_table,
-        function (error, results, fields) {
+        function (error) {
             if (error) throw error;
         }
     );
