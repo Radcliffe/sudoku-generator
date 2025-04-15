@@ -62,5 +62,5 @@ This project is licensed under the terms of the MIT license.
 
 ## Acknowledgements
 
-This project is based on the excellent `sudoku` project by Blagovest Dachev.
+This project is based on the excellent [sudoku](https://github.com/dachev/sudoku) project by Blagovest Dachev.
 
