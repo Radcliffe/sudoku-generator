@@ -28,9 +28,9 @@ but I do not know the minimum requirements.
 
 1. Clone this repository.
 
-2. Make a copy of the file `secrets.template.js` and name it `secrets.js`.
+2. Make a copy of the file `env-template` and name it `.env`.
 
-3. Edit `secrets.js` to include your MySQL database credentials.
+3. Edit `.env` to include your MySQL database credentials.
 
 4. Enter the command `npm install` on the command line.
 
@@ -46,6 +46,19 @@ where [number] is the number of puzzles to generate, and [batchSize] is the numb
 in each commit. The default values are 1000000 and 1000. With these values, the script runs for about 12 hours
 on my computer. The script can be safely interrupted by pressing Control-C, and the script can be run repeatedly
 to enlarge the database.
+
+
+## Database format
+
+The `create-table.js` script creates a table called `puzzle` with the following columns:
+
+- `id` - the unique id of the puzzle, an auto-incrementing integer starting at 1
+- `puzzle` - the puzzle in a string format, consisting of the digits 1-9 and the character `.` for empty cells
+- `solution` - the solution in a string format, consisting of the digits 1-9
+- `clues` - the number of clues (givens) in the puzzle
+- `difficulty` - the difficulty rating of the puzzle
+
+
 
 ## Contributing
 

@@ -1,8 +1,14 @@
 const sudoku = require('sudoku');
-const mysql = require('mysql');
-const secrets = require('./secrets');
-const connection = mysql.createConnection(secrets.db);
 
+require('dotenv').config()
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+});
 
 function stringify(puzzle) {
     return puzzle.map(x => {
@@ -24,8 +30,8 @@ function createPuzzle() {
     return {
         puzzle: stringify(puzzle),
         solution: stringify(solution),
-        clues: clues,
-        difficulty: difficulty,
+        clues,
+        difficulty
     }
 }
 

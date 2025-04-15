@@ -4,6 +4,7 @@
   "description": "Generates a database of graded Sudoku puzzles with solutions.",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.5.0",
     "mysql": "github:mysqljs/mysql",
     "sudoku": "^0.0.3"
   },

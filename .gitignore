@@ -137,6 +137,3 @@ dist
 
 # IntelliJ IDEA
 .idea/
-
-# secrets
-/secrets.js
