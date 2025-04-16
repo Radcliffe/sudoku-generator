@@ -13,7 +13,8 @@ as many as 29 clues. It is known that 17 is the least possible number of clues f
 puzzle having a unique solution, but these are hard to generate.
 
 It is not possible with these scripts to specify the difficulty level or the number of clues when
-generating a Sudoku puzzle. The scripts generate Sudoku puzzles completely at random, and then estimate
+generating a Sudoku puzzle, although it is possible to filter the results. 
+The scripts generate Sudoku puzzles completely at random, and then estimate
 the difficulty afterward.
 
 ## Getting started
