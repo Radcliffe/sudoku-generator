@@ -47,10 +47,15 @@ in each commit. The default values are 1000000 and 1000. With these values, the 
 on my computer. The script can be safely interrupted by pressing Control-C, and the script can be run repeatedly
 to enlarge the database.
 
+The script accepts the following optional command line arguments:
+- `--minimumDifficulty` - the minimum difficulty rating of the puzzles to generate. The default is 0.
+- `--maximumDifficulty` - the maximum difficulty rating of the puzzles to generate. The default is Infinity.
+- `--minimumClues` - the minimum number of clues in the puzzles to generate. The default is 0.
+- `--maximumClues` - the maximum number of clues in the puzzles to generate. The default is 81.
 
 ## Database format
 
-The `create-table.js` script creates a table called `puzzle` with the following columns:
+The `create-table.js` script creates a table called `sudoku` with the following columns:
 
 - `id` - the unique id of the puzzle, an auto-incrementing integer starting at 1
 - `puzzle` - the puzzle in a string format, consisting of the digits 1-9 and the character `.` for empty cells

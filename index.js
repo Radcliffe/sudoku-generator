@@ -1,14 +1,5 @@
-const sudoku = require('sudoku');
-
-require('dotenv').config()
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-});
+import sudoku from 'sudoku';
+import connection from "./database.js";
 
 function stringify(puzzle) {
     return puzzle.map(x => {
@@ -22,11 +13,22 @@ function countClues(puzzle) {
     }).length;
 }
 
-function createPuzzle() {
-    const puzzle = sudoku.makepuzzle();
+function createPuzzle(minimumDifficulty = 0,
+                      maximumDifficulty = Infinity,
+                      minimumClues = 0,
+                      maximumClues = 81) {
+    let puzzle, clues, difficulty;
+    while (true) {
+        puzzle = sudoku.makepuzzle();
+        clues = countClues(puzzle);
+        difficulty = sudoku.ratepuzzle(puzzle, 10);
+        if (clues >= minimumClues && clues <= maximumClues &&
+            difficulty >= minimumDifficulty && difficulty <= maximumDifficulty) {
+            break;
+        }
+    }
+
     const solution = sudoku.solvepuzzle(puzzle);
-    const difficulty = sudoku.ratepuzzle(puzzle, 10);
-    const clues = countClues(puzzle);
     return {
         puzzle: stringify(puzzle),
         solution: stringify(solution),
@@ -44,9 +46,14 @@ function savePuzzle(p) {
     );
 }
 
-function generatePuzzles(n, batchSize = 1000) {
-    batchSize = Math.min(batchSize, n);
-    console.log(`Puzzles remaining: ${n}`);
+function generatePuzzles(numberOfPuzzles,
+                         batchSize = 1000,
+                         minimumDifficulty = 0,
+                         maximumDifficulty = Infinity,
+                         minimumClues = 0,
+                         maximumClues = 81) {
+    batchSize = Math.min(batchSize, numberOfPuzzles);
+    console.log(`Puzzles remaining: ${numberOfPuzzles}`);
 
     function processBatch(remaining) {
         return new Promise((resolve, reject) => {
@@ -54,7 +61,8 @@ function generatePuzzles(n, batchSize = 1000) {
                 if (err) return reject(err);
 
                 for (let i = 0; i < Math.min(batchSize, remaining); i++) {
-                    let p = createPuzzle();
+                    let p = createPuzzle(minimumDifficulty, maximumDifficulty,
+                        minimumClues, maximumClues);
                     savePuzzle(p);
                 }
 
@@ -71,7 +79,7 @@ function generatePuzzles(n, batchSize = 1000) {
     }
 
     async function processAll() {
-        let remaining = n;
+        let remaining = numberOfPuzzles;
         while (remaining > 0) {
             await processBatch(remaining);
             remaining -= batchSize;
@@ -86,6 +94,4 @@ function generatePuzzles(n, batchSize = 1000) {
     });
 }
 
-module.exports = {
-    generatePuzzles: generatePuzzles,
-};
+export default generatePuzzles;

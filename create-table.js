@@ -1,6 +1,4 @@
-const mysql = require('mysql');
-const secrets = require('./secrets');
-const connection = mysql.createConnection(secrets.db);
+import connection from './database.js';
 
 const sql_drop_table = `DROP TABLE IF EXISTS sudoku`;
 
